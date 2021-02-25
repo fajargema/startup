@@ -45,6 +45,7 @@ func main() {
 
 	api.GET("/campaigns", camapaignHandler.GetCampaigns)
 	api.GET("/campaigns/:id", camapaignHandler.GetCampaign)
+	api.POST("/campaigns", authMiddleware(authService, userService), camapaignHandler.CreateCampaign)
 
 	router.Run()
 }
