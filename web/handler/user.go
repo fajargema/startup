@@ -2,6 +2,7 @@ package handler
 
 import (
 	"bwastartup/user"
+	"fmt"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -60,6 +61,7 @@ func (h *userHandler) Edit(c *gin.Context) {
 	registeredUser, err := h.userService.GetUserById(id)
 	if err != nil {
 		c.HTML(500, "error.html", nil)
+		return
 	}
 
 	input := user.FormUpdateUserInput{}
@@ -88,6 +90,42 @@ func (h *userHandler) Update(c *gin.Context) {
 	_, err = h.userService.UpdateUser(input)
 	if err != nil {
 		c.HTML(500, "error.html", nil)
+		return
+	}
+
+	c.Redirect(302, "/users")
+}
+
+func (h *userHandler) NewAvatar(c *gin.Context) {
+	idParam := c.Param("id")
+	id, _ := strconv.Atoi(idParam)
+
+	c.HTML(200, "user_avatar.html", gin.H{"ID": id})
+}
+
+func (h *userHandler) CreateAvatar(c *gin.Context) {
+	idParam := c.Param("id")
+	id, _ := strconv.Atoi(idParam)
+
+	file, err := c.FormFile("avatar")
+	if err != nil {
+		c.HTML(500, "error.html", nil)
+		return
+	}
+
+	userID := id
+	path := fmt.Sprintf("images/%d-%s", userID, file.Filename)
+
+	err = c.SaveUploadedFile(file, path)
+	if err != nil {
+		c.HTML(500, "error.html", nil)
+		return
+	}
+
+	_, err = h.userService.SaveAvatar(userID, path)
+	if err != nil {
+		c.HTML(500, "error.html", nil)
+		return
 	}
 
 	c.Redirect(302, "/users")
