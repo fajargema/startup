@@ -199,3 +199,15 @@ func (h *campaignHandler) Update(c *gin.Context) {
 
 	c.Redirect(302, "/campaigns")
 }
+
+func (h *campaignHandler) Show(c *gin.Context) {
+	idParam := c.Param("id")
+	id, _ := strconv.Atoi(idParam)
+
+	existingCampaign, err := h.campaignService.GetCampaignByID(campaign.GetCampaignDetailInput{ID: id})
+	if err != nil {
+		c.HTML(500, "error.html", nil)
+	}
+
+	c.HTML(200, "campaign_show.html", existingCampaign)
+}

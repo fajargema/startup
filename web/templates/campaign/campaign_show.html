@@ -1,0 +1,47 @@
+{{ define "content" }}
+
+<h2 class="mb-4">Campaign</h2>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <table border="0">
+            <tr>
+                <td>Name</td>
+                <td>:</td>
+                <td>{{ .Name }}</td>
+            </tr>
+            <tr>
+                <td>Short Description</td>
+                <td>:</td>
+                <td>{{ .ShortDescription }}</td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td>:</td>
+                <td>{{ .Description }}</td>
+            </tr>
+            <tr>
+                <td>Goal Amount</td>
+                <td>:</td>
+                <td>{{ .GoalAmountFormatIDR }}</td>
+            </tr>
+            <tr>
+                <td>Perks</td>
+                <td>:</td>
+                <td>{{ .Perks }}</td>
+            </tr>
+            <tr>
+                <td>Backer Count</td>
+                <td>:</td>
+                <td>{{ .BackerCount }}</td>
+            </tr>
+            <tr>
+                <td>Current Amount</td>
+                <td>:</td>
+                <td>{{ .CurrentAmountFormatIDR }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+{{ end }}
