@@ -207,6 +207,7 @@ func (h *campaignHandler) Show(c *gin.Context) {
 	existingCampaign, err := h.campaignService.GetCampaignByID(campaign.GetCampaignDetailInput{ID: id})
 	if err != nil {
 		c.HTML(500, "error.html", nil)
+		return
 	}
 
 	c.HTML(200, "campaign_show.html", existingCampaign)
